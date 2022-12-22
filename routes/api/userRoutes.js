@@ -39,7 +39,7 @@ router.route('/:userId')
     .catch((err) => res.status(500).json(err));
   })
   .delete((req, res) => {
-    User.findOneAndDelete({ _id: req.params.userId })
+    User.findOneAndRemove({ _id: req.params.userId })
       .then((user) => 
         !user
           ? res.status(404).json({ message: 'No user with that ID' })

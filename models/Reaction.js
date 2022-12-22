@@ -19,14 +19,9 @@ const reactionSchema = new Schema(
       type: Date,
       default: Date.now,
       get: (rawDate) => {
-        return rawDate.toLocalDateString('en-us', {
-          weekday: 'long',
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric'
-        });
+        return rawDate.toDateString();
       }
-    }
+    },
   },
   {
     toJSON: { getters: true },

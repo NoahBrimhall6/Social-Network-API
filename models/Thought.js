@@ -13,12 +13,7 @@ const thoughtSchema = new Schema(
       type: Date,
       default: Date.now,
       get: (rawDate) => {
-        return rawDate.toLocalDateString('en-us', {
-          weekday: 'long',
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric'
-        });
+        return rawDate.toDateString();
       }
     },
     username: {
@@ -28,14 +23,21 @@ const thoughtSchema = new Schema(
     reactions: [Reaction]
   },
   {
-    toJSON: { virtuals: true },
+    toJSON: { 
+      getters: true,
+      virtuals: true 
+    },
     id: false
   }
 );
 
 thoughtSchema
   .virtual('reactionCount')
-  .get(() => this.reactions.length);
+  .get(() => 
+    !this.reactions
+    ? 'None'
+    : this.reactions.length
+  );
 
 const Thought = model('thought', thoughtSchema);
 
